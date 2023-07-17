@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Route, useHistory } from "react-router-dom";
+// import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { Route } from "react-router-dom";
 import CurrentTemperatureUnitContext from "../contexts/CurrentTemperatureUnitContext";
 import { getForecastWeather, parseWeatherData } from "../utils/weatherApi";
 import Header from "./Header";
