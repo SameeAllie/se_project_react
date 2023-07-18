@@ -3,6 +3,7 @@ import SideBar from "./SideBar";
 import ClothesSection from "./ClothesSection";
 
 const Profile = ({
+  currentUser,
   items,
   onCardClick,
   onAddClick,
@@ -21,6 +22,7 @@ const Profile = ({
           logoutClick={logoutClick}
         />
         <div className="profile__info">
+          <h2>Welcome, {currentUser.data.name}</h2>
         </div>
         <ClothesSection
           cards={items}

@@ -48,18 +48,20 @@ const App = () => {
       .signIn({ email, password })
       .then((data) => {
         if (data.token) {
-          return auth.checkTokenValidity(data.token);
+          return auth.checkTokenValidity(data.token).then((response) => {
+            setCurrentUser(response.data);
+            setIsLoggedIn(true);
+            history.push("/profile");
+          });
         }
       })
-      .then((response) => {
-        setCurrentUser(response.data);
-        setIsLoggedIn(true);
-        history.push("/profile");
+      .catch((error) => {
+        console.log(error);
+        // Handle error here, such as displaying an error message to the user
       })
-      .catch((error) => console.log(error))
       .finally(() => {
-        handleCloseModal();
         setIsLoading(false);
+        handleCloseModal();
       });
   };
 
@@ -71,14 +73,17 @@ const App = () => {
       .then((response) => {
         if (response) {
           setCurrentUser(response.data);
-          handleSignIn(user);
+          handleSignIn(user).then(() => {
+            handleCloseModal();
+            setIsLoading(false);
+          });
         } else {
           console.log("User registration failed:", response.error);
         }
       })
-      .catch((error) => console.log(error))
-      .finally(() => {
-        handleCloseModal();
+      .catch((error) => {
+        console.log(error);
+        // Handle error here, such as displaying an error message to the user
         setIsLoading(false);
       });
   };
@@ -133,7 +138,6 @@ const App = () => {
           clothingItems.filter((item) => item._id !== card._id)
         );
         handleCloseModal();
-        setActiveModal("");
       })
 
       .catch((error) => {
@@ -208,7 +212,7 @@ const App = () => {
           data: {
             ...currentUser.data,
             name: data.name,
-            avatar: data.avatarUrl,
+            avatar: data.avatar,
           },
         }));
         handleCloseModal();
