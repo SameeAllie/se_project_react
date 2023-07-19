@@ -52,16 +52,14 @@ const App = () => {
             setCurrentUser(response.data);
             setIsLoggedIn(true);
             history.push("/profile");
+            handleCloseModal();
+            setIsLoading(false);
           });
         }
       })
       .catch((error) => {
         console.log(error);
-        // Handle error here, such as displaying an error message to the user
-      })
-      .finally(() => {
         setIsLoading(false);
-        handleCloseModal();
       });
   };
 
@@ -73,18 +71,17 @@ const App = () => {
       .then((response) => {
         if (response) {
           setCurrentUser(response.data);
-          handleSignIn(user).then(() => {
-            handleCloseModal();
-            setIsLoading(false);
-          });
+          handleSignIn(user);
+          handleCloseModal(); // Close the popup after a successful sign-up
+          setIsLoading(false);
         } else {
           console.log("User registration failed:", response.error);
+          setIsLoading(false); // Set isLoading to false even in case of error
         }
       })
       .catch((error) => {
         console.log(error);
-        // Handle error here, such as displaying an error message to the user
-        setIsLoading(false);
+        setIsLoading(false); // Set isLoading to false in case of any error
       });
   };
 
@@ -212,7 +209,7 @@ const App = () => {
           data: {
             ...currentUser.data,
             name: data.name,
-            avatar: data.avatar,
+            avatar: data.avatarUrl,
           },
         }));
         handleCloseModal();

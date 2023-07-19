@@ -78,7 +78,6 @@ const AddItemModal = ({
             minLength="1"
             maxLength="300"
             value={nameValue}
-          
             onChange={onNameChange}
           />
         </label>
@@ -92,7 +91,6 @@ const AddItemModal = ({
             name="imageUrl"
             id="input-imageUrl"
             value={imageValue}
-           
             onChange={onImageChange}
           />
         </label>
@@ -105,7 +103,6 @@ const AddItemModal = ({
               id="hot"
               value="hot"
               name="rangeOfTemp"
-          
             />
             <label className="modal__temp-ranges" htmlFor="hot">
               Hot
@@ -130,7 +127,6 @@ const AddItemModal = ({
               id="cold"
               value="cold"
               name="rangeOfTemp"
-            
             />
             <label className="modal__temp-ranges" htmlFor="cold">
               Cold

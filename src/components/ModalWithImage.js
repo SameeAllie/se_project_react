@@ -12,8 +12,7 @@ const ModalWithImage = ({
   const currentUser = useContext(CurrentUserContext);
 
   const isOwn =
-    selectedCard.owner ===
-    (currentUser === undefined ? "" : currentUser._id);
+    selectedCard.owner === (currentUser === undefined ? "" : currentUser._id);
 
   return (
     <div className="modal__container-image" onClick={onOutClick}>

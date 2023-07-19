@@ -14,14 +14,6 @@ function Main({
   clothingItems,
   isLoggedIn,
 }) {
-  const { parseWeatherData } = useContext(CurrentTemperatureUnitContext);
-
-  const filteredItems = clothingItems.filter((item) => {
-    const minTemperature = parseWeatherData(item.weather.minTemperature);
-    const maxTemperature = parseWeatherData(item.weather.maxTemperature);
-    return weatherTemp >= minTemperature && weatherTemp <= maxTemperature;
-  });
-
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
   const getWeatherType = () => {
@@ -35,6 +27,7 @@ function Main({
   };
   console.log(onCardLike);
   const weatherType = getWeatherType();
+
   const currentTemp = temperature(weatherTemp);
   const currentTempString = currentTemp[currentTemperatureUnit];
 

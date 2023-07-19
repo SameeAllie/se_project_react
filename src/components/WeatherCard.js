@@ -26,4 +26,3 @@ const WeatherCard = ({ day = true, type = "sunny", weatherTemp = 0 }) => {
 };
 
 export default WeatherCard;
-

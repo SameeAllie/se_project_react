@@ -17,7 +17,6 @@ const ModalWithForm = ({
   }
 
   return (
-  
     <div className="modal__container-form" onClick={onOutClick}>
       <form className="modal__form" onSubmit={handleSubmit}>
         <fieldset className="modal__fieldset">
