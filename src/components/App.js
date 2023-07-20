@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import { BrowserRouter, Route, useHistory } from "react-router-dom";
-import { BrowserRouter } from "react-router-dom";
-import { useHistory } from "react-router-dom";
-import { Route } from "react-router-dom";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
 import CurrentTemperatureUnitContext from "../contexts/CurrentTemperatureUnitContext";
 import { getForecastWeather, parseWeatherData } from "../utils/weatherApi";
 import Header from "./Header";
@@ -41,6 +38,7 @@ const App = () => {
   const history = useHistory();
   const [isLoading, setIsLoading] = React.useState(false);
   console.log(history);
+
   const handleSignIn = ({ email, password }) => {
     setIsLoading(true);
 
@@ -48,13 +46,24 @@ const App = () => {
       .signIn({ email, password })
       .then((data) => {
         if (data.token) {
-          return auth.checkTokenValidity(data.token).then((response) => {
-            setCurrentUser(response.data);
-            setIsLoggedIn(true);
-            history.push("/profile");
-            handleCloseModal();
-            setIsLoading(false);
-          });
+          return auth
+            .checkTokenValidity(data.token)
+            .then((response) => {
+              setCurrentUser(response.data);
+              setIsLoggedIn(true);
+              history.push("/profile");
+              handleCloseModal(); // Closing the modal when login is successful
+              setIsLoading(false);
+            })
+            .catch((error) => {
+              console.log(error);
+              setIsLoading(false);
+            });
+        } else {
+          // Handle the case when data.token is falsy (e.g., no token received)
+          // This might be an error condition depending on your authentication implementation
+          console.log("No token received");
+          setIsLoading(false);
         }
       })
       .catch((error) => {
@@ -188,12 +197,11 @@ const App = () => {
         console.log("Item added successfully:", response);
         setClothingItems((items) => [response.data, ...items]);
         handleCloseModal();
+        setIsLoading(false); // Success, set isLoading to false
       })
       .catch((error) => {
         console.log("Error adding item:", error);
-      })
-      .finally(() => {
-        setIsLoading(false);
+        setIsLoading(false); // Error occurred, set isLoading to false
       });
   };
 

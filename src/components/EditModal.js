@@ -45,7 +45,6 @@ const EditModal = ({ handleCloseModal, handleOutClick, handleEdit }) => {
           maxLength="300"
           value={name}
           onChange={(evt) => setName(evt.target.value)}
-       
         />
       </label>
       <label className="modal__label">
@@ -60,7 +59,6 @@ const EditModal = ({ handleCloseModal, handleOutClick, handleEdit }) => {
           maxLength="300"
           value={avatarUrl}
           onChange={(evt) => setAvatarUrl(evt.target.value)}
-        
         />
       </label>
     </ModalWithForm>
