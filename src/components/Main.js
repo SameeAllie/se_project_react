@@ -1,14 +1,13 @@
-import WeatherCard from "../components/WeatherCard";
 import React, { useContext } from "react";
 import CurrentTemperatureUnitContext from "../contexts/CurrentTemperatureUnitContext";
+import WeatherCard from "../components/WeatherCard";
 import ItemCard from "./ItemCard";
 import { temperature } from "../utils/weatherApi";
 import "../blocks/Main.css";
 import "../blocks/Card.css";
 
 function Main({
-  onCardLike,
-  onCardUnlike,
+  onLike,
   weatherTemp,
   onSelectCard,
   clothingItems,
@@ -25,11 +24,19 @@ function Main({
       return "cold";
     }
   };
-  console.log(onCardLike);
+
   const weatherType = getWeatherType();
 
   const currentTemp = temperature(weatherTemp);
   const currentTempString = currentTemp[currentTemperatureUnit];
+
+  // Filter clothingItems based on weather temperature
+  const filteredClothingItems = clothingItems.filter((item) => {
+    // Assuming each item has a property 'minTemperature' and 'maxTemperature'
+    const minTemp = item.minTemperature;
+    const maxTemp = item.maxTemperature;
+    return weatherTemp >= minTemp && weatherTemp <= maxTemp;
+  });
 
   return (
     <main className="main">
@@ -40,20 +47,21 @@ function Main({
             Today is {currentTempString} / You may want to wear:
           </p>
           <ul className="main__cards">
-            {clothingItems.map((item) => (
-              <ItemCard
-                key={item._id}
-                item={item}
-                onSelectCard={onSelectCard}
-                onLike={onCardLike}
-                onUnlike={onCardUnlike}
-                isLoggedIn={isLoggedIn}
-              />
-            ))}
+            {Array.isArray(clothingItems) &&
+              clothingItems.map((item) => (
+                <ItemCard
+                  key={item._id}
+                  item={item}
+                  onSelectCard={onSelectCard}
+                  onLike={onLike}
+                  isLoggedIn={isLoggedIn}
+                />
+              ))}
           </ul>
         </section>
       </div>
     </main>
   );
 }
+
 export default Main;

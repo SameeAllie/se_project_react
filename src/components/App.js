@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import CurrentTemperatureUnitContext from "../contexts/CurrentTemperatureUnitContext";
 import { getForecastWeather, parseWeatherData } from "../utils/weatherApi";
 import Header from "./Header";
@@ -19,7 +20,6 @@ import RegisterModal from "./RegisterModal";
 import MobileMenu from "./MobileMenu";
 import LogoutModal from "./LogoutModal";
 import EditModal from "./EditModal";
-import { Switch } from "react-router-dom/cjs/react-router-dom.min";
 import "../blocks/App.css";
 import "../blocks/Card.css";
 import "../blocks/WeatherCard.css";
@@ -180,6 +180,10 @@ const App = () => {
     });
   };
 
+  const handleDelete = () => {
+    setActiveModal("confirm");
+  };
+
   const handleAddItemSubmit = ({ card }) => {
     const { name, imageUrl, weather } = card;
     setIsLoading(true);
@@ -226,10 +230,6 @@ const App = () => {
         console.log(error);
         setIsLoading(false);
       });
-  };
-
-  const handleDelete = (itemId) => {
-    setActiveModal("confirm");
   };
 
   const handleLikeClick = (id, isLiked) => {
