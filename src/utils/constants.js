@@ -1,4 +1,4 @@
-export const latitude = -33.924870;
+export const latitude = -33.92487;
 export const longitude = 18.424055;
 export const APIkey = "fff7c99584e6a3fa84367b9015f707de";
 
@@ -88,4 +88,3 @@ export const weatherOptions = [
     type: "cloudy",
   },
 ];
-
