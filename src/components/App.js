@@ -204,16 +204,16 @@ const App = () => {
   };
 
   const handleEditSubmit = ({ name, avatarUrl }) => {
-    console.log(name);
     setIsLoading(true);
     userApi
       .updateCurrentUser({ name, avatarUrl })
       .then((data) => {
         setIsLoading(false);
-        setCurrentUser((currentUser) => ({
-          ...currentUser,
+        // Update the currentUser context with the new data
+        setCurrentUser((prevUser) => ({
+          ...prevUser,
           data: {
-            ...currentUser.data,
+            ...prevUser.data,
             name: data.name,
             avatar: data.avatarUrl,
           },
@@ -235,9 +235,9 @@ const App = () => {
 
     const token = localStorage.getItem("jwt");
 
-    if (isLiked) {
+    if (!isLiked) {
       itemsApi
-        .unlike(id)
+        .unlike(id, currentUser?._id)
         .then(({ data: updatedCard }) => {
           console.log("Card unliked:", updatedCard);
           setClothingItems((prevItems) =>

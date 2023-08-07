@@ -10,11 +10,14 @@ const ClothesSection = ({
   isLoggedIn,
   onLike,
   onUnlike,
+  weatherType, // New prop for weather type
 }) => {
   const currentUser = useContext(CurrentUserContext);
 
+  // Filter cards based on the current weather type
   const filteredCards = cards.filter(
-    (card) => card.owner === (currentUser === undefined ? "" : currentUser._id)
+    (card) =>
+      card?.owner === currentUser._id && card.weatherType === weatherType
   );
 
   return (
@@ -31,16 +34,20 @@ const ClothesSection = ({
         </button>
       </div>
       <ul className="profile__cards">
-        {filteredCards.map((card) => (
-          <ItemCard
-            key={card._id}
-            item={card}
-            onSelectCard={onCardClick}
-            onLike={onLike}
-            onUnlike={onUnlike}
-            isLoggedIn={isLoggedIn}
-          />
-        ))}
+        {filteredCards.length === 0 ? (
+          <div>No items to display</div>
+        ) : (
+          filteredCards.map((card) => (
+            <ItemCard
+              key={card._id}
+              item={card}
+              onSelectCard={onCardClick}
+              onLike={onLike}
+              onUnlike={onUnlike}
+              isLoggedIn={isLoggedIn}
+            />
+          ))
+        )}
       </ul>
     </div>
   );

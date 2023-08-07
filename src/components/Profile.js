@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SideBar from "./SideBar";
 import ClothesSection from "./ClothesSection";
+import { getForecastWeather } from "../utils/weatherApi";
 
 const Profile = ({
   items,
@@ -12,6 +13,14 @@ const Profile = ({
   onLike,
   onUnlike,
 }) => {
+  const [weatherType, setWeatherType] = useState("");
+  useEffect(() => {
+    getForecastWeather().then((data) => {
+      const currentWeatherType = data.weather[0].main;
+      setWeatherType(currentWeatherType);
+    });
+  }, []);
+
   return (
     <section className="profile">
       <div className="profile__content">
@@ -28,9 +37,11 @@ const Profile = ({
           isLoggedIn={isLoggedIn}
           onLike={onLike}
           onUnlike={onUnlike}
+          weatherType={weatherType}
         />
       </div>
     </section>
   );
 };
+
 export default Profile;

@@ -95,9 +95,15 @@ const userApi = {
       }),
     }).then(checkResponse);
   },
+
   getCurrentUser: () => {
-    return fetch(`${baseUrl}/users/me`).then(checkResponse);
+    return fetch(`${baseUrl}/users/me`, {
+      headers: {
+        Authorization: `Bearer ${getItem("jwt")}`,
+      },
+    }).then(checkResponse);
   },
+
   updateCurrentUser: (data) => {
     return fetch(`${baseUrl}/users/me`, {
       method: "PATCH",
