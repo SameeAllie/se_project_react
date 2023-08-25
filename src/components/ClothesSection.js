@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ItemCard from "./ItemCard";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import "../blocks/Profile.css";
@@ -13,12 +13,20 @@ const ClothesSection = ({
   weatherType, // New prop for weather type
 }) => {
   const currentUser = useContext(CurrentUserContext);
-
+  const [filteredCards, setFilteredCards] = useState([]);
   // Filter cards based on the current weather type
-  const filteredCards = cards.filter(
-    (card) =>
-      card?.owner === currentUser._id && card.weatherType === weatherType
-  );
+
+
+  useEffect(() => {
+    
+    const FCards = cards.filter(
+      (card) =>
+        card.weather === "cold" // card has a weather prop not weatherType. card.weatherType does not exist
+    );
+    setFilteredCards(FCards)
+    console.log(cards)
+    console.log(weatherType)
+  }, [cards]);
 
   return (
     <div className="profile__container">

@@ -206,18 +206,16 @@ const App = () => {
   const handleEditSubmit = ({ name, avatarUrl }) => {
     setIsLoading(true);
     userApi
-      .updateCurrentUser({ name, avatarUrl })
+      .updateCurrentUser({ name: name, avatarUrl: avatarUrl })
       .then((data) => {
         setIsLoading(false);
         // Update the currentUser context with the new data
         setCurrentUser((prevUser) => ({
           ...prevUser,
-          data: {
-            ...prevUser.data,
-            name: data.name,
-            avatar: data.avatarUrl,
-          },
+         name: data.name,
+         avatar:data.avatar
         }));
+        console.log(currentUser);
         handleCloseModal();
       })
       .catch((error) => {

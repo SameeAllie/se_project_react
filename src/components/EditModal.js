@@ -19,8 +19,9 @@ const EditModal = ({ handleCloseModal, handleOutClick, handleEdit }) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    const onUpdateProfile = { name, avatarUrl };
-    handleEdit(onUpdateProfile);
+    //const onUpdateProfile = { name, avatarUrl };
+    console.log(avatarUrl);
+    handleEdit(name, avatarUrl);
   };
 
   return (
