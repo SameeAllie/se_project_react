@@ -16,16 +16,13 @@ const ClothesSection = ({
   const [filteredCards, setFilteredCards] = useState([]);
   // Filter cards based on the current weather type
 
-
   useEffect(() => {
-    
     const FCards = cards.filter(
-      (card) =>
-        card.weather === "cold" // card has a weather prop not weatherType. card.weatherType does not exist
+      (card) => card.weather === "cold" // card has a weather prop not weatherType. card.weatherType does not exist
     );
-    setFilteredCards(FCards)
-    console.log(cards)
-    console.log(weatherType)
+    setFilteredCards(FCards);
+    console.log(cards);
+    console.log(weatherType);
   }, [cards]);
 
   return (
