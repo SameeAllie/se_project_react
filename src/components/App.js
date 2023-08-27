@@ -50,6 +50,7 @@ const App = () => {
             .checkTokenValidity(data.token)
             .then((response) => {
               setCurrentUser(response.data);
+              console.log(response.data);
               setIsLoggedIn(true);
               history.push("/profile");
               handleCloseModal();
@@ -179,6 +180,7 @@ const App = () => {
   };
 
   const handleAddItemSubmit = ({ card }) => {
+    console.log("add item attempt");
     const { name, imageUrl, weather } = card;
     setIsLoading(true);
 
@@ -206,7 +208,7 @@ const App = () => {
   const handleEditSubmit = (name, avatarUrl) => {
     setIsLoading(true);
     userApi
-      .updateCurrentUser({ name: name, avatarUrl: avatarUrl })
+      .updateCurrentUser({ name: name, avatar: avatarUrl })
       .then((data) => {
         setIsLoading(false);
         // Update the currentUser context with the new data
@@ -215,8 +217,7 @@ const App = () => {
           name: data.name,
           avatar: data.avatar,
         }));
-        // The updated data will be logged
-        console.log(data);
+        console.log(currentUser);
         handleCloseModal();
       })
       .catch((error) => {
