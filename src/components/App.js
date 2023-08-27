@@ -50,7 +50,7 @@ const App = () => {
             .checkTokenValidity(data.token)
             .then((response) => {
               setCurrentUser(response.data);
-              console.log(response.data);
+              console.log(response.data)
               setIsLoggedIn(true);
               history.push("/profile");
               handleCloseModal();
@@ -180,7 +180,7 @@ const App = () => {
   };
 
   const handleAddItemSubmit = ({ card }) => {
-    console.log("add item attempt");
+    console.log("add item attempt")
     const { name, imageUrl, weather } = card;
     setIsLoading(true);
 
@@ -205,7 +205,7 @@ const App = () => {
       });
   };
 
-  const handleEditSubmit = (name, avatarUrl) => {
+  const handleEditSubmit = ( name, avatarUrl ) => {
     setIsLoading(true);
     userApi
       .updateCurrentUser({ name: name, avatar: avatarUrl })
@@ -214,10 +214,10 @@ const App = () => {
         // Update the currentUser context with the new data
         setCurrentUser((prevUser) => ({
           ...prevUser,
-          name: data.name,
-          avatar: data.avatar,
+            name: data.name,
+            avatar: data.avatar
         }));
-        console.log(currentUser);
+        console.log(currentUser)
         handleCloseModal();
       })
       .catch((error) => {
@@ -235,7 +235,7 @@ const App = () => {
 
     const token = localStorage.getItem("jwt");
 
-    if (!isLiked) {
+    if (isLiked) {
       itemsApi
         .unlike(id, currentUser?._id)
         .then(({ data: updatedCard }) => {
@@ -248,7 +248,7 @@ const App = () => {
     } else {
       itemsApi
         .like(id)
-        .then((updatedCard) => {
+        .then(({ data: updatedCard }) => {
           console.log("Card liked:", updatedCard);
           setClothingItems((prevItems) =>
             prevItems.map((item) => (item._id === id ? updatedCard : item))
