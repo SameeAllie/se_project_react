@@ -37,6 +37,7 @@ const App = () => {
   const [token, setToken] = React.useState("");
   const history = useHistory();
   const [isLoading, setIsLoading] = React.useState(false);
+  const [weatherType, setWeatherType] = useState(); 
   console.log(history);
 
   const handleSignIn = ({ email, password }) => {
@@ -258,11 +259,23 @@ const App = () => {
     }
   };
 
+  const getWeatherType = () => {
+    if (temp >= 86) {
+      return "hot";
+    } else if (temp >= 66 && temp <= 85) {
+      return "warm";
+    } else if (temp <= 65) {
+      return "cold";
+    }
+  };
+
   useEffect(() => {
     getForecastWeather()
       .then((data) => {
         const temperature = parseWeatherData(data);
         setTemp(temperature);
+        setWeatherType(getWeatherType);
+        console.log(weatherType);
 
         itemsApi
           .get()
@@ -316,8 +329,12 @@ const App = () => {
                 onSelectCard={handleSelectedCard}
                 clothingItems={clothingItems}
                 isLoggedIn={isLoggedIn}
-                onCardLike={handleLikeClick}
-                onCardUnlike={handleLikeClick}
+                onLike={handleLikeClick}
+                onUnlike={handleLikeClick}
+                items={clothingItems}
+                onCardClick={handleCardClick}
+                onAddClick={handleAddClick}
+                weatherType= {weatherType}
               />
             </Route>
             <ProtectedRoute path="/profile" isLoggedIn={isLoggedIn}>
@@ -330,6 +347,7 @@ const App = () => {
                 logoutClick={handleSignoutClick}
                 onLike={handleLikeClick}
                 onUnlike={handleLikeClick}
+                weatherType= {weatherType}
               />
             </ProtectedRoute>
           </Switch>

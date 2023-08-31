@@ -10,20 +10,28 @@ const ClothesSection = ({
   isLoggedIn,
   onLike,
   onUnlike,
-  weatherType, // New prop for weather type
+  weatherType, 
+  filtered// New prop for weather type
 }) => {
   const currentUser = useContext(CurrentUserContext);
-  const [filteredCards, setFilteredCards] = useState([]);
-  // Filter cards based on the current weather type
+  const [displayCards, setDisplayCards] = useState([]);
 
   useEffect(() => {
-    const FCards = cards.filter(
-      (card) => card.weather === "cold" // card has a weather prop not weatherType. card.weatherType does not exist
-    );
-    setFilteredCards(FCards);
-    console.log(cards);
-    console.log(weatherType);
-  }, [cards]);
+    setDisplayCards(cards)
+    if (filtered){
+      console.log("hello if")
+      const fillCards = cards.filter(
+        (card) =>
+          card?.owner === currentUser._id && card.weather === weatherType
+          
+          // card has a weather prop not weatherType. card.weatherType does not exist
+      );
+      setDisplayCards(fillCards)
+    }
+    
+    console.log(cards)
+    console.log(weatherType)
+  }, [cards, filtered]);
 
   return (
     <div className="profile__container">
@@ -39,10 +47,10 @@ const ClothesSection = ({
         </button>
       </div>
       <ul className="profile__cards">
-        {filteredCards.length === 0 ? (
+        {displayCards.length === 0 ? (
           <div>No items to display</div>
         ) : (
-          filteredCards.map((card) => (
+          displayCards.map((card) => (
             <ItemCard
               key={card._id}
               item={card}
