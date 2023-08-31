@@ -38,6 +38,7 @@ const App = () => {
   const history = useHistory();
   const [isLoading, setIsLoading] = React.useState(false);
   const [weatherType, setWeatherType] = useState(); 
+  
   console.log(history);
 
   const handleSignIn = ({ email, password }) => {
