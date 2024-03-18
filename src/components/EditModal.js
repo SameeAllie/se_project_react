@@ -19,9 +19,9 @@ const EditModal = ({ handleCloseModal, handleOutClick, handleEdit }) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    //const onUpdateProfile = { name, avatarUrl };
-    console.log(avatarUrl)
-    handleEdit(name, avatarUrl);
+    const onUpdateProfile = { name, avatarUrl };
+    console.log(onUpdateProfile);
+    handleEdit(onUpdateProfile);
   };
 
   return (
@@ -52,7 +52,6 @@ const EditModal = ({ handleCloseModal, handleOutClick, handleEdit }) => {
         Avatar*
         <input
           className="modal__input"
-          type="text"
           placeholder="Avatar URL"
           name="avatarURL"
           id="inputAvatarURL"

@@ -1,5 +1,10 @@
 import { baseUrl, checkResponse } from "./constants";
 
+const baseUrl =
+  process.env.NODE_ENV === "production"
+    ? "https://api.wtwrallie.crabdance.com"
+    : "http://localhost:3001";
+
 const getItem = (key) => {
   try {
     const item = localStorage.getItem(key);

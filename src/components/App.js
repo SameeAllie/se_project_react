@@ -5,7 +5,7 @@ import { getForecastWeather, parseWeatherData } from "../utils/weatherApi";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "../components/Footer";
-import ModalWithImage from "./ModalWithImage";
+import ItemModal from "./ItemModal";
 import ModalWithDeleteConfirm from "./ModalWithDeleteConfirm";
 import Profile from "../components/Profile";
 import AddItemModal from "./AddItemModal";
@@ -20,11 +20,17 @@ import MobileMenu from "./MobileMenu";
 import LogoutModal from "./LogoutModal";
 import EditModal from "./EditModal";
 import { Switch } from "react-router-dom";
+
 import "../blocks/App.css";
 import "../blocks/Card.css";
 import "../blocks/WeatherCard.css";
 import "../blocks/MobileMenu.css";
 import "../blocks/ModalConfirm.css";
+import "../blocks/Body.css";
+import "../blocks/ClothesSection.css";
+import "../blocks/ItemCards.css";
+import "../blocks/Page.css";
+import "../blocks/SideBar.css";
 
 const App = () => {
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
@@ -37,8 +43,6 @@ const App = () => {
   const [token, setToken] = React.useState("");
   const history = useHistory();
   const [isLoading, setIsLoading] = React.useState(false);
-  const [weatherType, setWeatherType] = useState(); 
-  
   console.log(history);
 
   const handleSignIn = ({ email, password }) => {
@@ -52,7 +56,6 @@ const App = () => {
             .checkTokenValidity(data.token)
             .then((response) => {
               setCurrentUser(response.data);
-              console.log(response.data)
               setIsLoggedIn(true);
               history.push("/profile");
               handleCloseModal();
@@ -182,7 +185,6 @@ const App = () => {
   };
 
   const handleAddItemSubmit = ({ card }) => {
-    console.log("add item attempt")
     const { name, imageUrl, weather } = card;
     setIsLoading(true);
 
@@ -207,19 +209,13 @@ const App = () => {
       });
   };
 
-  const handleEditSubmit = ( name, avatarUrl ) => {
+  const handleEditSubmit = ({ name, avatarUrl }) => {
     setIsLoading(true);
     userApi
-      .updateCurrentUser({ name: name, avatar: avatarUrl })
+      .updateCurrentUser({ name, avatar: avatarUrl })
       .then((data) => {
         setIsLoading(false);
-        // Update the currentUser context with the new data
-        setCurrentUser((prevUser) => ({
-          ...prevUser,
-            name: data.name,
-            avatar: data.avatar
-        }));
-        console.log(currentUser)
+        setCurrentUser(data);
         handleCloseModal();
       })
       .catch((error) => {
@@ -237,7 +233,9 @@ const App = () => {
 
     const token = localStorage.getItem("jwt");
 
+    // Determine whether to like or unlike based on the current state
     if (isLiked) {
+      // If the item is already liked, unlike it
       itemsApi
         .unlike(id, currentUser?._id)
         .then(({ data: updatedCard }) => {
@@ -248,9 +246,10 @@ const App = () => {
         })
         .catch((err) => console.log(err));
     } else {
+      // If the item is not liked, like it
       itemsApi
         .like(id)
-        .then(({ data: updatedCard }) => {
+        .then((updatedCard) => {
           console.log("Card liked:", updatedCard);
           setClothingItems((prevItems) =>
             prevItems.map((item) => (item._id === id ? updatedCard : item))
@@ -260,23 +259,11 @@ const App = () => {
     }
   };
 
-  const getWeatherType = () => {
-    if (temp >= 86) {
-      return "hot";
-    } else if (temp >= 66 && temp <= 85) {
-      return "warm";
-    } else if (temp <= 65) {
-      return "cold";
-    }
-  };
-
   useEffect(() => {
     getForecastWeather()
       .then((data) => {
         const temperature = parseWeatherData(data);
         setTemp(temperature);
-        setWeatherType(getWeatherType);
-        console.log(weatherType);
 
         itemsApi
           .get()
@@ -332,10 +319,6 @@ const App = () => {
                 isLoggedIn={isLoggedIn}
                 onLike={handleLikeClick}
                 onUnlike={handleLikeClick}
-                items={clothingItems}
-                onCardClick={handleCardClick}
-                onAddClick={handleAddClick}
-                weatherType= {weatherType}
               />
             </Route>
             <ProtectedRoute path="/profile" isLoggedIn={isLoggedIn}>
@@ -348,11 +331,12 @@ const App = () => {
                 logoutClick={handleSignoutClick}
                 onLike={handleLikeClick}
                 onUnlike={handleLikeClick}
-                weatherType= {weatherType}
+                weatherTemp={temp}
               />
             </ProtectedRoute>
           </Switch>
           <Footer />
+
           {activeModal === "add" && (
             <AddItemModal
               handleCloseModal={handleCloseModal}
@@ -374,7 +358,7 @@ const App = () => {
             />
           )}
           {activeModal === "image" && (
-            <ModalWithImage
+            <ItemModal
               selectedCard={selectedCard}
               onClose={handleCloseModal}
               onDeleteClick={handleDelete}
