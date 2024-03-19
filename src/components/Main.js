@@ -3,43 +3,38 @@ import CurrentTemperatureUnitContext from "../contexts/CurrentTemperatureUnitCon
 import WeatherCard from "../components/WeatherCard";
 import ItemCard from "./ItemCard";
 import { temperature } from "../utils/weatherApi";
-import ClothesSection from "./ClothesSection";
+
 import "../blocks/Main.css";
 import "../blocks/Card.css";
 
 function Main({
   onLike,
+  onUnlike,
   weatherTemp,
   onSelectCard,
   clothingItems,
   isLoggedIn,
-  items,
-  onCardClick,
-  onAddClick,
-  weatherType,
+  filteredCards,
 }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
-  // const getWeatherType = () => {
-  //   if (weatherTemp >= 86) {
-  //     return "hot";
-  //   } else if (weatherTemp >= 66 && weatherTemp <= 85) {
-  //     return "warm";
-  //   } else if (weatherTemp <= 65) {
-  //     return "cold";
-  //   }
-  // };
+  const getWeatherType = () => {
+    if (weatherTemp >= 86) {
+      return "hot";
+    } else if (weatherTemp >= 66 && weatherTemp <= 85) {
+      return "warm";
+    } else if (weatherTemp <= 65) {
+      return "cold";
+    }
+  };
 
-  // const weatherType = getWeatherType();
+  //I wanted to thank you for the help :)
+
+  const weather = getWeatherType();
   const currentTemp = temperature(weatherTemp);
   const currentTempString = currentTemp[currentTemperatureUnit];
-  // Filter clothingItems based on weather temperature
   const filteredClothingItems = clothingItems.filter((item) => {
-    // Assuming each item has a property 'minTemperature' and 'maxTemperature'
-    const minTemp = item.minTemperature;
-    const maxTemp = item.maxTemperature;
-
-    return weatherTemp >= minTemp && weatherTemp <= maxTemp;
+    return item.weather === weather;
   });
 
   return (
@@ -52,17 +47,6 @@ function Main({
             Today is {currentTempString} / You may want to wear:
           </p>
 
-          <ClothesSection
-          cards={items}
-          onCardClick={onCardClick}
-          onAddClick={onAddClick}
-          isLoggedIn={isLoggedIn}
-          onLike={onLike}
-          onUnlike={onLike}
-          weatherType={weatherType}
-          filtered = {true}
-        />
-{/* 
           <ul className="main__cards">
             {Array.isArray(filteredClothingItems) &&
               filteredClothingItems.map((item) => (
@@ -71,10 +55,11 @@ function Main({
                   item={item}
                   onSelectCard={onSelectCard}
                   onLike={onLike}
+                  onUnlike={onUnlike}
                   isLoggedIn={isLoggedIn}
                 />
               ))}
-          </ul> */}
+          </ul>
         </section>
       </div>
     </main>

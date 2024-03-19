@@ -12,17 +12,16 @@ const Profile = ({
   logoutClick,
   onLike,
   onUnlike,
-  weatherType,
+  weatherTemp,
 }) => {
   // const [weatherType, setWeatherType] = useState("");
   // useEffect(() => {
   //   getForecastWeather().then((data) => {
   //     const currentWeatherType = data.weather[0].main;
-  //     console.log(currentWeatherType);
   //     setWeatherType(currentWeatherType);
   //   });
   // }, []);
-  console.log(weatherType)
+
   return (
     <section className="profile">
       <div className="profile__content">
@@ -39,8 +38,7 @@ const Profile = ({
           isLoggedIn={isLoggedIn}
           onLike={onLike}
           onUnlike={onUnlike}
-          weatherType={weatherType}
-          filtered={false}
+          weatherTemp={weatherTemp}
         />
       </div>
     </section>

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import headerLogo from "../images/logo.svg";
-import ToggleSwitch from "./TempSwitch";
+import headerLogo from "../images/Logo.svg";
+import ToggleSwitch from "./ToggleSwitch";
 import headerButton from "../images/header-button.svg";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import "../blocks/Header.css";
@@ -32,7 +32,7 @@ const Header = ({
           <img className="header__logo" src={headerLogo} alt=" WTWR logo"></img>
         </NavLink>
         <p className="header__date" id="currentDate">
-          {currentDate}, Cape Town
+          {currentDate}, South Africa 
         </p>
       </div>
       <button

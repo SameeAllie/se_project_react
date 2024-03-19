@@ -1,8 +1,8 @@
-import { baseUrl, checkResponse } from "../utils/constants";
+import { checkResponse } from "../utils/constants";
 
 export const baseUrl =
   process.env.NODE_ENV === "production"
-    ? "https://api.wtwrallie.crabdance.com"
+    ? "https://api.wtwrdenim.crabdance.com"
     : "http://localhost:3001";
 
 export const signUp = (user) => {

@@ -11,7 +11,6 @@ const ItemCard = ({ item, onSelectCard, onLike, onUnlike, isLoggedIn }) => {
     item.likes && item.likes.some((user) => user === currentUser._id);
 
   const handleLike = () => {
-    console.log(isLiked)
     if (isLiked) {
       onUnlike(item._id, isLiked); // Pass true/false to onUnlike
     } else {

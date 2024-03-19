@@ -1,5 +1,5 @@
 import React from "react";
-import closeIcon from "../images/Union.svg";
+import closeIcon from "../images/close.svg";
 import "../blocks/ModalWithForm.css";
 
 const ModalWithForm = ({

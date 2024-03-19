@@ -1,6 +1,6 @@
 import React from "react";
-import closeIcon from "../images/Union.svg";
 import "../blocks/ModalConfirm.css";
+import closeIcon from "../images/close.svg";
 
 const ModalWithDeleteConfirm = ({
   onOutClick,
