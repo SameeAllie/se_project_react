@@ -2,7 +2,6 @@
   "name": "se_project_react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://www.wtwrdenim.crabdance.com",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -19,8 +18,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "npm run build && scp -r ./build/* tripletenuser@domainname.example.com:/home/tripletenuser/frontend"
+    "deploy": "gh-pages -d build"
   },
+  "homepage": "https://www.wtwrallie.crabdance.com",
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -38,9 +38,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "webpack": "^5.90.1"
   }
 }
