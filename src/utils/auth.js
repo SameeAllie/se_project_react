@@ -2,7 +2,7 @@ import { checkResponse } from "../utils/constants";
 
 export const baseUrl =
   process.env.NODE_ENV === "production"
-    ? "https://api.wtwrdenim.crabdance.com"
+    ? "https://api.wtwrallie.crabdance.com"
     : "http://localhost:3001";
 
 export const signUp = (user) => {
